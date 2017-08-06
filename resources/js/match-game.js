@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	MatchGame.renderCards(MatchGame.generateCardValues(),$('#game'));
+//	MatchGame.gameOver();
 });
 
 var MatchGame = {};
@@ -98,8 +99,11 @@ MatchGame.flipCard = function($card, $game) {
 
 MatchGame.gameOver = function() {
 	$('#game').addClass('gameOver');
+	$('.instructions').append("<button class='play-again'>Play Again?</button>");
+	$('.play-again').click(function() {
+		location.reload();
+	});
 };
-
 
 
 
