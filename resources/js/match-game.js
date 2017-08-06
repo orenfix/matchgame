@@ -69,7 +69,8 @@ MatchGame.renderCards = function(cardValues, $game) {
 MatchGame.flipCard = function($card, $game) {
 	var $flippedCards = $game.data('flippedCards');
 	var $gameFlippedCards = $game.data('gameFlippedCards');
-	$('.move-counter').html('Moves: ' + moveCounter++);
+	moveCounter++;
+	$('.move-counter').html('Moves: ' + moveCounter);
 
 	if ( $card.data('flipped') == true ) {
 		return;
