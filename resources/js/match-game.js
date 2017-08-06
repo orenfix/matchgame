@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	MatchGame.renderCards(MatchGame.generateCardValues(),$('#game'));
-//	MatchGame.gameOver();
 });
 
 var MatchGame = {};
+var moveCounter = 0;
 
 /*
   Sets up a new game after HTML document has loaded.
@@ -47,6 +47,7 @@ MatchGame.renderCards = function(cardValues, $game) {
 		'hsl(310,85%,65%)',
 		'hsl(360,85%,65%)'
 	];
+
 	$game.html('');
 	for ( x = 0; x < cardValues.length; x++ ) {
 		var $card = $("<div class='card col-xs-3'></div>");
@@ -68,6 +69,7 @@ MatchGame.renderCards = function(cardValues, $game) {
 MatchGame.flipCard = function($card, $game) {
 	var $flippedCards = $game.data('flippedCards');
 	var $gameFlippedCards = $game.data('gameFlippedCards');
+	$('.move-counter').html('Moves: ' + moveCounter++);
 
 	if ( $card.data('flipped') == true ) {
 		return;
@@ -92,7 +94,7 @@ MatchGame.flipCard = function($card, $game) {
 				$flippedCards[0].html('').css('background-color','rgb(32,64,86)').data('flipped',false);
 				$flippedCards[1].html('').css('background-color','rgb(32,64,86)').data('flipped',false);
 				$flippedCards.length = 0;
-			},500);
+			},450);
 		}
 	} else return;
 };

@@ -39,6 +39,13 @@ p {
 	align-items: center;
 	cursor: pointer;
 }
+
+.move-counter {
+	font-size: 2rem;
+	font-weight: bold;
+	padding: .5rem 0;
+}
+
 #game {
 	position: relative;
 }
