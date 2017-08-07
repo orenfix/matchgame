@@ -78,16 +78,16 @@ MatchGame.renderCards = function(cardValues, $game, $level) {
 		'hsl(265,85%,65%)',
 		'hsl(310,85%,65%)',
 		'hsl(360,85%,65%)',
-		'hsl(35,85%,65%)',
-		'hsl(65,85%,65%)',
-		'hsl(100,85%,65%)',
-		'hsl(120,85%,65%)',
-		'hsl(180,85%,65%)',
-		'hsl(200,85%,65%)',
-		'hsl(240,85%,65%)',
-		'hsl(280,85%,65%)',
-		'hsl(330,85%,65%)',
-		'hsl(345,85%,65%)'
+		'hsl(25,45%,65%)',
+		'hsl(55,45%,65%)',
+		'hsl(90,45%,65%)',
+		'hsl(160,45%,65%)',
+		'hsl(220,45%,65%)',
+		'hsl(265,45%,65%)',
+		'hsl(310,45%,65%)',
+		'hsl(360,45%,65%)',
+		'hsl(25,85%,35%)',
+		'hsl(55,85%,35%)'
 	];
 
 	$game.html('');
@@ -114,14 +114,18 @@ MatchGame.renderCards = function(cardValues, $game, $level) {
 MatchGame.flipCard = function($card, $game, $level) {
 	var $flippedCards = $game.data('flippedCards');
 	var $gameFlippedCards = $game.data('gameFlippedCards');
-	var moveCounter = $game.data('moveCounter');
-	$game.data('moveCounter',(moveCounter+1));
-	moveCounter = $game.data('moveCounter');
-	$('.move-counter').html('Moves: ' + moveCounter);
+//	var moveCounter = $game.data('moveCounter');
+//	$game.data('moveCounter',(moveCounter+1));
+//	moveCounter = $game.data('moveCounter');
+//	$('.move-counter').html('Moves: ' + moveCounter);
 
 	if ( $card.data('flipped') == true ) {
 		return;
 	} else {
+		var moveCounter = $game.data('moveCounter');
+		$game.data('moveCounter',(moveCounter+1));
+		moveCounter = $game.data('moveCounter');
+		$('.move-counter').html('Moves: ' + moveCounter);
 		$card.css('background-color',$card.data('color'));
 		$card.append($card.data('value'));
 		$card.data('flipped',true);
