@@ -26,7 +26,6 @@ p {
 }
 
 .card {
-	height: 200px;
 	background-color: rgb(32,64,86);
 	color: rgb(255,255,255);
 	border: 4px solid #ffffff;
@@ -44,6 +43,20 @@ p {
 	font-size: 2rem;
 	font-weight: bold;
 	padding: .5rem 0;
+}
+
+.board-level {
+	color: white;
+	background-color: hsl(90,85%,65%);
+	border: 0;
+	border-radius: 4px;
+	font-size: 1.2rem;
+	width: 16rem;
+	padding: .5rem 1em;
+	margin: 1rem .5rem;
+}
+#advanced {
+	background-color: hsl(360,85%,65%);
 }
 
 #game {

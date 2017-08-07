@@ -1,9 +1,22 @@
 $(document).ready(function() {
-	MatchGame.renderCards(MatchGame.generateCardValues(),$('#game'));
+	MatchGame.renderCards(MatchGame.generateCardValues($('#game')),$('#game'));
 });
 
 var MatchGame = {};
 var moveCounter = 0;
+
+MatchGame.boardLevel = function (level) {
+	if ( level == 'beginner' ) {
+			$level = 8;
+//			moveCounter = 0;
+//			$('.move-counter').html('Moves: ' + moveCounter);
+//			MatchGame.renderCards(MatchGame.generateCardValues($('#game')),$('#game'));
+			alert('New feature coming coon!');
+		} else if ( level == 'advanced' ) {
+			$level = 18;
+			alert('Advanced level coming soon!');
+		}
+}
 
 /*
   Sets up a new game after HTML document has loaded.
@@ -14,9 +27,17 @@ var moveCounter = 0;
   Generates and returns an array of matching card values.
  */
 
-MatchGame.generateCardValues = function () {
+MatchGame.generateCardValues = function ($game) {
+	$game.data('level',8);
+	var $level = $game.data('level');
+	$('.board-level').click(function () {
+		var level = $(this).attr('id');
+		MatchGame.boardLevel(level);
+	});
+
+
 	var values = [];
-	for ( i = 1; i < 9; i++ ) {
+	for ( i = 1; i <= $level; i++ ) {
 		values.push(i,i);
 	}
 	
@@ -37,6 +58,7 @@ MatchGame.generateCardValues = function () {
 MatchGame.renderCards = function(cardValues, $game) {
 	$game.data('flippedCards',[]);
 	$game.data('gameFlippedCards',[]);
+
 	cardColors = [
 		'hsl(25,85%,65%)',
 		'hsl(55,85%,65%)',
@@ -49,12 +71,16 @@ MatchGame.renderCards = function(cardValues, $game) {
 	];
 
 	$game.html('');
+	var $level = $game.data('level');
 	for ( x = 0; x < cardValues.length; x++ ) {
-		var $card = $("<div class='card col-xs-3'></div>");
+		if ( $level == 8 ) { var $card = $("<div class='card col-xs-3'></div>"); }
+		if ( $level == 18 ) { var $card = $("<div class='card col-xs-2'></div>"); }
 		$card.data('value',cardValues[x]);
 		$card.data('flipped',false);
 		$card.data('color',cardColors[cardValues[x]-1]);
 		$game.append($card);
+		if ( $level == 8 ) { $('.card').css('height','200px'); }
+		if ( $level == 18 ) { $('.card').css('height','140px'); }
 		$card.click(function() {
 			MatchGame.flipCard($(this),$game);
 		});
@@ -69,6 +95,7 @@ MatchGame.renderCards = function(cardValues, $game) {
 MatchGame.flipCard = function($card, $game) {
 	var $flippedCards = $game.data('flippedCards');
 	var $gameFlippedCards = $game.data('gameFlippedCards');
+	var $level = $game.data('level');
 	moveCounter++;
 	$('.move-counter').html('Moves: ' + moveCounter);
 
@@ -87,7 +114,7 @@ MatchGame.flipCard = function($card, $game) {
 			$flippedCards[1].css('background-color','rgb(153,153,153)').css('color','rgb(204,204,204)');
 			$flippedCards.length = 0;
 			$gameFlippedCards.push($card[0],$card[1]);
-			if ($gameFlippedCards.length == 16 ) {
+			if ($gameFlippedCards.length == $level*2 ) {
 				MatchGame.gameOver();
 			}
 		} else {
@@ -102,6 +129,7 @@ MatchGame.flipCard = function($card, $game) {
 
 MatchGame.gameOver = function() {
 	$('#game').addClass('gameOver');
+	$('.card').off('click');
 	$('.instructions').append("<button class='play-again'>Play Again?</button>");
 	$('.play-again').click(function() {
 		location.reload();
