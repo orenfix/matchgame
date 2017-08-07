@@ -39,15 +39,33 @@ p {
 	cursor: pointer;
 }
 
+@media only screen and (max-width: 789px) {
+	.card.col-xs-2 {
+		font-size: 5rem;
+	}
+}
+
+@media only screen and (max-width: 560px) {
+	.card.col-xs-2 {
+		font-size: 3rem;
+	}
+}
+
 .move-counter {
 	font-size: 2rem;
 	font-weight: bold;
 	padding: .5rem 0;
+	min-height: 54px;
 }
 
-.board-level {
-	color: white;
-	background-color: hsl(90,85%,65%);
+p.board-level {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+button.board-level {
+	color: rgb(204,204,204);
+	background-color: rgb(153,153,153);
 	border: 0;
 	border-radius: 4px;
 	font-size: 1.2rem;
@@ -55,8 +73,15 @@ p {
 	padding: .5rem 1em;
 	margin: 1rem .5rem;
 }
-#advanced {
+
+#beginner.selected {
+	background-color: hsl(90,85%,65%);
+	color: white;
+}
+
+#advanced.selected {
 	background-color: hsl(360,85%,65%);
+	color: white;
 }
 
 #game {
@@ -76,21 +101,6 @@ p {
     text-align: center;
     top: 23rem;
     left: 0;
-}
-
-.play-again {
-	display: block;
-	color: white;
-	background-color: hsl(220,85%,65%);
-	border: 0;
-	border-radius: 4px;
-	font-size: 1.2rem;
-	padding: .5rem 1em;
-	margin: 2rem auto;
-}
-
-.play-again:hover, .play-again:active {
-	background-color: hsl(220,85%,55%);
 }
 
 @media only screen and (max-width: 529px) {

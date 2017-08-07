@@ -1,41 +1,51 @@
-$(document).ready(function() {
-	MatchGame.renderCards(MatchGame.generateCardValues($('#game')),$('#game'));
-});
-
 var MatchGame = {};
-var moveCounter = 0;
-
-MatchGame.boardLevel = function (level) {
-	if ( level == 'beginner' ) {
-			$level = 8;
-//			moveCounter = 0;
-//			$('.move-counter').html('Moves: ' + moveCounter);
-//			MatchGame.renderCards(MatchGame.generateCardValues($('#game')),$('#game'));
-			alert('New feature coming coon!');
-		} else if ( level == 'advanced' ) {
-			$level = 18;
-			alert('Advanced level coming soon!');
-		}
-}
 
 /*
   Sets up a new game after HTML document has loaded.
   Renders a 4x4 board of cards.
 */
 
+$(document).ready(function() {
+	$('button.board-level').click(function() {
+		MatchGame.boardLevel($('#game'),($(this).attr('id')));
+	});
+	MatchGame.boardLevel($('#game'),'beginner');
+});
+
+
+/*
+Obtain selected board level or start with Beginner level as default.
+Pass level to other functions.
+*/
+
+MatchGame.boardLevel = function ($game,$level) {
+	$game.data('moveCounter',0);
+	$('#game').removeClass('gameOver');
+	$('p.board-level').html("Choose a level:");
+	$('.move-counter').html('');
+	if ( $level == 'beginner' ) {
+			$level = 8;
+			$('#beginner').addClass('selected');
+			$('#advanced').removeClass('selected');
+		} else if ( $level == 'advanced' ) {
+			$level = 18;
+			$('#advanced').addClass('selected');
+			$('#beginner').removeClass('selected');
+		} else {
+			$level = 8;
+			$('#beginner').addClass('selected');
+			$('#advanced').removeClass('selected');
+		}
+
+	MatchGame.renderCards(MatchGame.generateCardValues($level),$('#game'),$level);
+};
+
+
 /*
   Generates and returns an array of matching card values.
  */
 
-MatchGame.generateCardValues = function ($game) {
-	$game.data('level',8);
-	var $level = $game.data('level');
-	$('.board-level').click(function () {
-		var level = $(this).attr('id');
-		MatchGame.boardLevel(level);
-	});
-
-
+MatchGame.generateCardValues = function ($level) {
 	var values = [];
 	for ( i = 1; i <= $level; i++ ) {
 		values.push(i,i);
@@ -55,7 +65,7 @@ MatchGame.generateCardValues = function ($game) {
   object.
 */
 
-MatchGame.renderCards = function(cardValues, $game) {
+MatchGame.renderCards = function(cardValues, $game, $level) {
 	$game.data('flippedCards',[]);
 	$game.data('gameFlippedCards',[]);
 
@@ -67,11 +77,20 @@ MatchGame.renderCards = function(cardValues, $game) {
 		'hsl(220,85%,65%)',
 		'hsl(265,85%,65%)',
 		'hsl(310,85%,65%)',
-		'hsl(360,85%,65%)'
+		'hsl(360,85%,65%)',
+		'hsl(35,85%,65%)',
+		'hsl(65,85%,65%)',
+		'hsl(100,85%,65%)',
+		'hsl(120,85%,65%)',
+		'hsl(180,85%,65%)',
+		'hsl(200,85%,65%)',
+		'hsl(240,85%,65%)',
+		'hsl(280,85%,65%)',
+		'hsl(330,85%,65%)',
+		'hsl(345,85%,65%)'
 	];
 
 	$game.html('');
-	var $level = $game.data('level');
 	for ( x = 0; x < cardValues.length; x++ ) {
 		if ( $level == 8 ) { var $card = $("<div class='card col-xs-3'></div>"); }
 		if ( $level == 18 ) { var $card = $("<div class='card col-xs-2'></div>"); }
@@ -82,7 +101,7 @@ MatchGame.renderCards = function(cardValues, $game) {
 		if ( $level == 8 ) { $('.card').css('height','200px'); }
 		if ( $level == 18 ) { $('.card').css('height','140px'); }
 		$card.click(function() {
-			MatchGame.flipCard($(this),$game);
+			MatchGame.flipCard($(this), $game, $level);
 		});
 	}
 };
@@ -92,11 +111,12 @@ MatchGame.renderCards = function(cardValues, $game) {
   Updates styles on flipped cards depending whether they are a match or not.
  */
 
-MatchGame.flipCard = function($card, $game) {
+MatchGame.flipCard = function($card, $game, $level) {
 	var $flippedCards = $game.data('flippedCards');
 	var $gameFlippedCards = $game.data('gameFlippedCards');
-	var $level = $game.data('level');
-	moveCounter++;
+	var moveCounter = $game.data('moveCounter');
+	$game.data('moveCounter',(moveCounter+1));
+	moveCounter = $game.data('moveCounter');
 	$('.move-counter').html('Moves: ' + moveCounter);
 
 	if ( $card.data('flipped') == true ) {
@@ -127,13 +147,14 @@ MatchGame.flipCard = function($card, $game) {
 	} else return;
 };
 
+/*
+This function runs when the game is over
+*/
+
 MatchGame.gameOver = function() {
 	$('#game').addClass('gameOver');
 	$('.card').off('click');
-	$('.instructions').append("<button class='play-again'>Play Again?</button>");
-	$('.play-again').click(function() {
-		location.reload();
-	});
+	$('p.board-level').html("Play again? <br> Choose a level:");
 };
 
 
