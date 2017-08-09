@@ -114,10 +114,6 @@ MatchGame.renderCards = function(cardValues, $game, $level) {
 MatchGame.flipCard = function($card, $game, $level) {
 	var $flippedCards = $game.data('flippedCards');
 	var $gameFlippedCards = $game.data('gameFlippedCards');
-//	var moveCounter = $game.data('moveCounter');
-//	$game.data('moveCounter',(moveCounter+1));
-//	moveCounter = $game.data('moveCounter');
-//	$('.move-counter').html('Moves: ' + moveCounter);
 
 	if ( $card.data('flipped') == true ) {
 		return;
@@ -142,10 +138,14 @@ MatchGame.flipCard = function($card, $game, $level) {
 				MatchGame.gameOver();
 			}
 		} else {
+			$('.card').off('click');
 			setTimeout(function() {
 				$flippedCards[0].html('').css('background-color','rgb(32,64,86)').data('flipped',false);
 				$flippedCards[1].html('').css('background-color','rgb(32,64,86)').data('flipped',false);
 				$flippedCards.length = 0;
+				$('.card').click(function() {
+					MatchGame.flipCard($(this), $game, $level);
+				});
 			},450);
 		}
 	} else return;
