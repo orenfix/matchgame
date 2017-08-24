@@ -103,6 +103,12 @@ MatchGame.renderCards = function(cardValues, $game, $level) {
 		$card.click(function() {
 			MatchGame.flipCard($(this), $game, $level);
 		});
+		$('.popout').click(function() {
+			MatchGame.popOut();
+		});
+		$('.popin').click(function() {
+			MatchGame.popIn();
+		});
 	}
 };
 
@@ -160,6 +166,18 @@ MatchGame.gameOver = function() {
 	$('.card').off('click');
 	$('p.board-level').html("Play again? <br> Choose a level:");
 };
+
+/*
+Functions to pop-out/pop-in the game board
+*/
+MatchGame.popOut = function() {
+	window.open('popout.html','MatchGame','width=600,height=600,top=50,left=300');
+}
+
+MatchGame.popIn = function() {
+	window.opener.focus();
+	window.close();
+}
 
 
 

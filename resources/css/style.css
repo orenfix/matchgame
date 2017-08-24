@@ -8,7 +8,7 @@ html {
 body {
 	font-family: "Work Sans", sans-serif;
 	background-color: rgb(255,242,242);
-	margin-top: 5.25rem;
+	margin-top: 2rem;
 }
 
 h1, h2 {
@@ -23,6 +23,23 @@ h2 {
 
 p {
 	color: rgb(74,74,74);
+}
+
+.popout-container {
+	text-align: right;
+}
+
+i {
+	color: hsl(220,85%,65%);
+	cursor: pointer;
+}
+
+i:hover, i:active {
+	color: hsl(160,85%,65%);
+}
+
+i.popin {
+	margin-right: 1rem;
 }
 
 .card {
