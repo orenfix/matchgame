@@ -98,8 +98,8 @@ MatchGame.renderCards = function(cardValues, $game, $level) {
 		$card.data('flipped',false);
 		$card.data('color',cardColors[cardValues[x]-1]);
 		$game.append($card);
-		if ( $level == 8 ) { $('.card').css('height','200px'); }
-		if ( $level == 18 ) { $('.card').css('height','140px'); }
+		var $cardWidth = $('.card').outerWidth();
+		$('.card').css('height',$cardWidth); 
 		$card.click(function() {
 			MatchGame.flipCard($(this), $game, $level);
 		});
@@ -111,6 +111,15 @@ MatchGame.renderCards = function(cardValues, $game, $level) {
 		});
 	}
 };
+
+/*
+  Updates card height when window resizes
+*/
+
+$(window).resize(function() {
+	var $cardWidth = $('.card').outerWidth();
+	$('.card').css('height',$cardWidth); 
+});
 
 /*
   Flips over a given card and checks to see if two cards are flipped over.
@@ -168,10 +177,17 @@ MatchGame.gameOver = function() {
 };
 
 /*
-Functions to pop-out/pop-in the game board
+  Functions to pop-out/pop-in the game board
 */
 MatchGame.popOut = function() {
-	window.open('popout.html','MatchGame','width=600,height=600,top=50,left=300');
+	var width;
+	var middle = screen.width/2 - 332.5;
+	if ( screen.width > 665 ) {
+		width = 665;
+	} else {
+		width = screen.width;
+	}
+	window.open('popout.html','MatchGame','width='+width+',height=884,top=50,left='+middle+',scrollbar=yes');
 }
 
 MatchGame.popIn = function() {
