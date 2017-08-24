@@ -179,6 +179,7 @@ MatchGame.gameOver = function() {
 /*
   Functions to pop-out/pop-in the game board
 */
+
 MatchGame.popOut = function() {
 	var width;
 	var middle = screen.width/2 - 332.5;
